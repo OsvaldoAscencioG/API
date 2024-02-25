@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Hora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        select, button {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #hora {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hora en Europa</h1>
+    <div id="hora"></div>
+    <label for="ciudad">Selecciona una ciudad de Europa:</label>
+    <select id="ciudad">
+        <option value="Andorra">Andorra</option>
+        <option value="Astrakhan">Astrakhan</option>
+        <option value="Athens">Athens</option>
+        <option value="Belgrade">Belgrade</option>
+        <option value="Berlin">Berlín</option>
+        <option value="Brussels">Brussels</option>
+        <option value="Bucharest">Bucharest</option>
+        <option value="Budapest">Budapest</option>
+        <option value="Chisinau">Chisinau</option>
+        <option value="Dublin">Dublin</option>
+        <option value="Gibraltar">Gibraltar</option>
+        <option value="Helsinki">Helsinki</option>
+        <option value="Istanbul">Istanbul</option>
+        <option value="Kaliningrad">Kaliningrad</option>
+        <option value="Kirov">Kirov</option>
+        <option value="Kyiv">Kyiv</option>
+        <option value="Lisbon">Lisbon</option>
+        <option value="London">London</option>
+        <option value="Madrid">Madrid</option>
+        <option value="Malta">Malta</option>
+        <option value="Minsk">Minsk</option>
+        <option value="Moscow">Moscow</option>
+        <option value="Paris">Paris</option>
+        <option value="Prague">Prague</option>
+        <option value="Riga">Riga</option>
+        <option value="Rome">Rome</option>
+        <option value="Samara">Samara</option>
+        <option value="Saratov">Saratov</option>
+        <option value="Simferopol">Simferopol</option>
+        <option value="Sofia">Sofia</option>
+        <option value="Tallinn">Tallinn</option>
+        <option value="Tirane">Tirane</option>
+        <option value="Ulyanovsk">Ulyanovsk</option>
+        <option value="Vienna">Vienna</option>
+        <option value="Vilnius">Vilnius</option>
+        <option value="Volgograd">Volgograd</option>
+        <option value="Warsaw">Warsaw</option>
+        <option value="Zurich">Zurich</option>
+    </select>
+    <button onclick="obtenerHora()">Obtener Hora</button>
+
+    <script>
+        function obtenerHora() {
+            const ciudad = document.getElementById('ciudad').value;
+            fetch(`http://worldtimeapi.org/api/timezone/Europe/${ciudad}`)
+                .then(response => response.json())
+                .then(data => {
+                    const horaUTC = new Date(data.utc_datetime);
+                    const horaLocal = horaUTC.toLocaleTimeString('es-ES', { timeZone: `Europe/${ciudad}` });
+                    document.getElementById('hora').innerText = `La hora en ${ciudad} es: ${horaLocal}`;
+                })
+                .catch(error => console.error('Error al obtener la hora:', error));
+        }
+    </script>
+</body>
+</html>
